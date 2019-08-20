@@ -7,5 +7,4 @@ import java.io.Serializable;
 
 interface OnPreResult extends Serializable {
     Observable<AResult> onPreResult(int requestCode, int resultCode, Intent data);
-
 }

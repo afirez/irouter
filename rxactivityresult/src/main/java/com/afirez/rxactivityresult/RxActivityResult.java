@@ -22,11 +22,15 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 import io.reactivex.subjects.PublishSubject;
 
 import java.lang.ref.WeakReference;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public final class RxActivityResult {
@@ -68,7 +72,7 @@ public final class RxActivityResult {
             return startHolderActivity(requestIntentSender, null);
         }
 
-        public Observable<AResult> startIntent(final Intent intent) {
+        public Observable<AResult> startIntentByActivity(final Intent intent) {
             return startIntent(intent, null);
         }
 
@@ -164,5 +168,35 @@ public final class RxActivityResult {
 //
 //            return null;
 //        }
+
+        public Observable<AResult> startIntent(final Intent intent) {
+            return topActivity.rxTopActivity()
+                    .flatMap(new Function<Activity, ObservableSource<AResult>>() {
+                        @Override
+                        public ObservableSource<AResult> apply(Activity activity) throws Exception {
+                            final int requestCode = requestCode();
+                            try {
+                                HolderFragment.startActivityForResult(activity, intent, requestCode);
+                            } catch (Throwable e) {
+                                return Observable.error(e);
+                            }
+                            return HolderFragment.with(activity.getFragmentManager())
+                                    .rxActivityResult()
+                                    .filter(new Predicate<AResult>() {
+                                        @Override
+                                        public boolean test(AResult aResult) throws Exception {
+                                            return aResult.requestCode() == requestCode;
+                                        }
+                                    });
+                        }
+                    });
+        }
+    }
+
+    private static AtomicInteger requestCode = new AtomicInteger(65535);
+
+    private static int requestCode() {
+        requestCode.compareAndSet(0, 65535);
+        return requestCode.getAndDecrement();
     }
 }

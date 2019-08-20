@@ -16,7 +16,7 @@ class NavFragmentActivity : AppCompatActivity() {
         val tag = "fragmentTag"
         var fragment = supportFragmentManager.findFragmentByTag(tag)
         if (fragment == null) {
-            fragment = IRouter.with(RouterApi::class.java).navFragment("https://github.com/afirez/spi")
+            fragment = IRouter.with(RouterApi::class.java).navFragment("https://github.com/afirez/irouter")
             if (fragment != null) {
                 val transaction = supportFragmentManager.beginTransaction()
 //            if (fragment.isAdded) {

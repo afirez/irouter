@@ -11,7 +11,7 @@ import com.afirez.spi.SPI
 
 
 /**
- * https://github.com/afirez/spi
+ * https://github.com/afirez/irouter
  */
 @SPI(path = "/irouter/fragment/nav")
 class NavFragment : Fragment() {
@@ -20,8 +20,8 @@ class NavFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        whoami = arguments?.getString("whoami", "https://github.com/afirez/spi")
-            ?: "https://github.com/afirez/spi"
+        whoami = arguments?.getString("whoami", "https://github.com/afirez/irouter")
+            ?: "https://github.com/afirez/irouter"
     }
 
     override fun onCreateView(

@@ -1,19 +1,3 @@
-/*
- * Copyright 2016 Víctor Albertos
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.afirez.rxactivityresult;
 
 import android.app.Activity;
@@ -23,6 +7,7 @@ import android.content.IntentSender;
 import android.os.Bundle;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -73,10 +58,10 @@ public final class RxActivityResult {
         }
 
         public Observable<AResult> startIntentByActivity(final Intent intent) {
-            return startIntent(intent, null);
+            return startIntentByActivity(intent, null);
         }
 
-        public Observable<AResult> startIntent(final Intent intent, OnPreResult onPreResult) {
+        public Observable<AResult> startIntentByActivity(final Intent intent, OnPreResult onPreResult) {
             return startHolderActivity(new Request(intent), onPreResult);
         }
 
@@ -171,6 +156,7 @@ public final class RxActivityResult {
 
         public Observable<AResult> startIntent(final Intent intent) {
             return topActivity.rxTopActivity()
+                    .observeOn(AndroidSchedulers.mainThread())
                     .flatMap(new Function<Activity, ObservableSource<AResult>>() {
                         @Override
                         public ObservableSource<AResult> apply(Activity activity) throws Exception {

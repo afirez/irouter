@@ -1,8 +1,10 @@
 package com.afirez.irouter.app;
 
 import androidx.fragment.app.Fragment;
+import com.afirez.irouter.Result;
 import com.afirez.irouter.router.Path;
 import com.afirez.irouter.router.Query;
+import io.reactivex.Observable;
 
 import java.util.ArrayList;
 
@@ -22,6 +24,9 @@ public interface RouterApi {
 
     @Path("/irouter/activity/nav/fragment")
     void navNavFragmentActivity();
+
+    @Path("/irouter/activity/nav/fragment")
+    Observable<Result> navNavFragmentActivity2();
 
     @Path("/irouter/fragment/nav")
     Fragment navFragment(@Query("whoami") String whoami);

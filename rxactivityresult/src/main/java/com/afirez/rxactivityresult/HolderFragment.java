@@ -12,12 +12,12 @@ import io.reactivex.subjects.Subject;
 
 public class HolderFragment extends Fragment {
 
-    public static final String TAG = "HolderFragment";
+    public static final String TAG = "HolderFragment:rxactivityresult";
 
-    private Subject<AResult> rxUiResult = BehaviorSubject.<AResult>create().toSerialized();
+    private Subject<AResult> rxResult = BehaviorSubject.<AResult>create().toSerialized();
 
     public Observable<AResult> rxActivityResult() {
-        return rxUiResult;
+        return rxResult;
     }
 
     public static HolderFragment with(FragmentManager fm) {
@@ -25,6 +25,7 @@ public class HolderFragment extends Fragment {
         if (rf == null) {
             rf = new HolderFragment();
             fm.beginTransaction().add(rf, HolderFragment.TAG).commit();
+            fm.executePendingTransactions();
         }
         return rf;
     }
@@ -37,7 +38,7 @@ public class HolderFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        rxUiResult.onNext(new AResult(requestCode, resultCode, data));
+        rxResult.onNext(new AResult(requestCode, resultCode, data));
     }
 
     public static int startActivityForResult(

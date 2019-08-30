@@ -64,7 +64,7 @@ ext {
     siteUrl = 'https://github.com/afirez/irouter'
     gitUrl = 'https://github.com/afirez/irouter.git'
 
-    projectVersion = '1.0.0'
+    projectVersion = '1.0.1'
 
     developerId = 'afirez'
     developerName = 'afirez'

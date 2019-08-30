@@ -32,9 +32,9 @@ dependencies {
 //    testImplementation 'junit:junit:4.12'
 
 }
-//
-//apply plugin: 'maven'
-//
+
+apply plugin: 'maven'
+
 //uploadArchives {
 //    repositories {
 //        mavenDeployer {
@@ -57,7 +57,7 @@ ext {
     siteUrl = 'https://github.com/afirez/irouter'
     gitUrl = 'https://github.com/afirez/irouter.git'
 
-    projectVersion = '1.0.0'
+    projectVersion = '1.0.1'
 
     developerId = 'afirez'
     developerName = 'afirez'

@@ -20,11 +20,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public final class RxActivityResult {
     public static TopActivity topActivity;
+    public static Application app;
 
     private RxActivityResult() {
     }
 
     public static void init(final Application application) {
+        app = application;
         topActivity = new TopActivity(application);
     }
 
@@ -156,6 +158,7 @@ public final class RxActivityResult {
 
         public Observable<AResult> startIntent(final Intent intent) {
             return topActivity.rxTopActivity()
+                    .take(1)
                     .observeOn(AndroidSchedulers.mainThread())
                     .flatMap(new Function<Activity, ObservableSource<AResult>>() {
                         @Override

@@ -59,7 +59,7 @@ class IRouterInterceptor implements Interceptor {
         }).doOnComplete(new Action() {
             @Override
             public void run() throws Exception {
-               IRouter.log("<---- onComplete call: " + request);
+                IRouter.log("<---- onComplete call: " + request);
             }
         }).doOnError(new Consumer<Throwable>() {
             @Override
@@ -69,7 +69,7 @@ class IRouterInterceptor implements Interceptor {
         }).doOnDispose(new Action() {
             @Override
             public void run() throws Exception {
-               IRouter.log("<---- onDispose: " + request);
+                IRouter.log("<---- onDispose: " + request);
             }
         });
 
@@ -153,6 +153,7 @@ class IRouterInterceptor implements Interceptor {
                 request.call = Request.CALL_ACTIVITY;
 
                 rxResult = RxActivityResult.topActivity.rxTopActivity()
+                        .take(1)
                         .flatMap(new Function<Activity, ObservableSource<AResult>>() {
                             @Override
                             public ObservableSource<AResult> apply(Activity activity) throws Exception {
@@ -185,6 +186,7 @@ class IRouterInterceptor implements Interceptor {
             }
 
             rxResult = RxActivityResult.topActivity.rxTopActivity()
+                    .take(1)
                     .flatMap(new Function<Activity, ObservableSource<AResult>>() {
                         @Override
                         public ObservableSource<AResult> apply(Activity activity) throws Exception {

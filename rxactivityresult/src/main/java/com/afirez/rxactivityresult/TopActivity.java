@@ -20,28 +20,43 @@ public class TopActivity {
     }
 
     private void registerActivityLifeCycle() {
-        if (activityLifecycleCallbacks != null) application.unregisterActivityLifecycleCallbacks(activityLifecycleCallbacks);
+        if (activityLifecycleCallbacks != null)
+            application.unregisterActivityLifecycleCallbacks(activityLifecycleCallbacks);
 
         activityLifecycleCallbacks = new Application.ActivityLifecycleCallbacks() {
-            @Override public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
                 topActivityOrNull = activity;
             }
 
-            @Override public void onActivityStarted(Activity activity) {}
+            @Override
+            public void onActivityStarted(Activity activity) {
+            }
 
-            @Override public void onActivityResumed(Activity activity) {
+            @Override
+            public void onActivityResumed(Activity activity) {
                 topActivityOrNull = activity;
             }
 
-            @Override public void onActivityPaused(Activity activity) {
-                topActivityOrNull = null;
+            @Override
+            public void onActivityPaused(Activity activity) {
+
             }
 
-            @Override public void onActivityStopped(Activity activity) {}
+            @Override
+            public void onActivityStopped(Activity activity) {
+            }
 
-            @Override public void onActivitySaveInstanceState(Activity activity, Bundle outState) {}
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+            }
 
-            @Override public void onActivityDestroyed(Activity activity) {}
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+                if (activity == topActivityOrNull) {
+                    topActivityOrNull = null;
+                }
+            }
         };
 
         application.registerActivityLifecycleCallbacks(activityLifecycleCallbacks);
@@ -53,6 +68,7 @@ public class TopActivity {
 
     /**
      * Emits just one time a valid reference to the current activity
+     *
      * @return the current activity
      */
     volatile boolean emitted = false;
@@ -61,13 +77,15 @@ public class TopActivity {
         emitted = false;
         return Observable.interval(50, 50, TimeUnit.MILLISECONDS)
                 .map(new Function<Long, Object>() {
-                    @Override public Object apply(Long aLong) throws Exception {
+                    @Override
+                    public Object apply(Long aLong) throws Exception {
                         if (topActivityOrNull == null) return 0;
                         return topActivityOrNull;
                     }
                 })
                 .takeWhile(new Predicate<Object>() {
-                    @Override public boolean test(Object candidate) throws Exception {
+                    @Override
+                    public boolean test(Object candidate) throws Exception {
                         boolean continueEmitting = true;
                         if (emitted) continueEmitting = false;
                         if (candidate instanceof Activity) emitted = true;
@@ -75,12 +93,14 @@ public class TopActivity {
                     }
                 })
                 .filter(new Predicate<Object>() {
-                    @Override public boolean test(Object candidate) throws Exception {
+                    @Override
+                    public boolean test(Object candidate) throws Exception {
                         return candidate instanceof Activity;
                     }
                 })
                 .map(new Function<Object, Activity>() {
-                    @Override public Activity apply(Object activity) throws Exception {
+                    @Override
+                    public Activity apply(Object activity) throws Exception {
                         return (Activity) activity;
                     }
                 });

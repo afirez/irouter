@@ -5,10 +5,10 @@ buildscript {
     repositories {
         google()
         jcenter()
-        //        maven {
-////            url uri('./repo')
-//            url "https://dl.bintray.com/afirez/android"
-//        }
+        maven {
+//            url uri('./repo')
+            url "https://dl.bintray.com/afirez/android"
+        }
 
     }
     dependencies {

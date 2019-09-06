@@ -7,10 +7,17 @@ import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class TopActivity {
     final Application application;
+
+    private ArrayList<Activity> activities = new ArrayList<>();
+
     volatile Activity topActivityOrNull;
     Application.ActivityLifecycleCallbacks activityLifecycleCallbacks;
 
@@ -27,6 +34,7 @@ public class TopActivity {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
                 topActivityOrNull = activity;
+                activities.add(activity);
             }
 
             @Override
@@ -56,6 +64,7 @@ public class TopActivity {
                 if (activity == topActivityOrNull) {
                     topActivityOrNull = null;
                 }
+                activities.remove(activity);
             }
         };
 
@@ -79,8 +88,21 @@ public class TopActivity {
                 .map(new Function<Long, Object>() {
                     @Override
                     public Object apply(Long aLong) throws Exception {
-                        if (topActivityOrNull == null) return 0;
-                        return topActivityOrNull;
+                        Activity[] theActivities = activities.toArray(new Activity[activities.size()]);
+                        if (theActivities != null) {
+                            int length = theActivities.length;
+                            for (int i = length - 1; i >= 0; i--) {
+                                Activity activity = theActivities[i];
+                                if (activity != null
+                                        && !activity.isFinishing()
+                                        && !activity.isDestroyed()) {
+                                    return activity;
+                                } else {
+                                    theActivities[i] = null;
+                                }
+                            }
+                        }
+                        return 0; // no available activity
                     }
                 })
                 .takeWhile(new Predicate<Object>() {

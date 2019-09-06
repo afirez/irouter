@@ -24,7 +24,7 @@ public class HolderFragment extends Fragment {
         HolderFragment rf = (HolderFragment) fm.findFragmentByTag(HolderFragment.TAG);
         if (rf == null) {
             rf = new HolderFragment();
-            fm.beginTransaction().add(rf, HolderFragment.TAG).commit();
+            fm.beginTransaction().add(rf, HolderFragment.TAG).commitAllowingStateLoss();
             fm.executePendingTransactions();
         }
         return rf;

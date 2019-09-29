@@ -22,7 +22,7 @@ public class DefaultCallAdapterFactory extends CallAdapter.Factory {
         }
 
         //return Observable<Result> for result
-        final boolean rxResult = responseType == Result.class;
+        final boolean returnRxResult = responseType == Result.class;
         if ((rawType == Observable.class)) {
             final Type finalResponseType = responseType;
             return new CallAdapter<Response, Observable<Result>>() {
@@ -33,20 +33,19 @@ public class DefaultCallAdapterFactory extends CallAdapter.Factory {
 
                 @Override
                 public Observable<Result> adapt(Call<Response> call) {
-                    Response response = null;
                     try {
-                        response = call.execute();
-                        Object data = response.data();
+                        Response response = call.execute();
+                        Observable<Result> rxResult = response.rxResult();
 
-                        if (data == null) {
-                            return Observable.error(new NullPointerException("onResult.data == null"));
+                        if (rxResult == null) {
+                            return Observable.error(new NullPointerException("response.rxResult == null"));
                         }
 
-                        if (!rxResult) {
+                        if (!returnRxResult) {
                             return Observable.error(new IllegalStateException("Illegal responseType " + finalResponseType));
                         }
 
-                        return ((Observable<Result>) data);
+                        return rxResult;
                     } catch (Throwable e) {
                         IRouter.log("----> error: " + e);
                         return Observable.error(e);
@@ -67,9 +66,8 @@ public class DefaultCallAdapterFactory extends CallAdapter.Factory {
                 Response response;
                 try {
                     response = call.execute();
-                    Object data = response.data();
 
-                    Observable<Result> rxResult = (Observable<Result>) data;
+                    Observable<Result> rxResult = response.rxResult();
 
                     if (response.request().call == Request.CALL_FRAGMENT) {
                         Object fragment = rxResult.blockingFirst().data();
@@ -85,25 +83,24 @@ public class DefaultCallAdapterFactory extends CallAdapter.Factory {
                         }
                     }
 
-                    if (response.request().call == Request.CALL_ACTIVITY) {
-                        rxResult.subscribe(new DefaultObserver<Result>() {
-                            @Override
-                            public void onNext(Result result) {
+                    // response.request().call == Request.CALL_ACTIVITY
+                    // or response.request().call == Request.CALL_UNKNOWN
+                    rxResult.subscribe(new DefaultObserver<Result>() {
+                        @Override
+                        public void onNext(Result result) {
+                            IRouter.log("----> missing result: " + result);
+                        }
 
-                            }
+                        @Override
+                        public void onError(Throwable e) {
+                            IRouter.log("----> missing result error: " + e);
+                        }
 
-                            @Override
-                            public void onError(Throwable e) {
+                        @Override
+                        public void onComplete() {
 
-                            }
-
-                            @Override
-                            public void onComplete() {
-
-                            }
-                        });
-
-                    }
+                        }
+                    });
                 } catch (Throwable e) {
                     IRouter.log("----> error: " + e);
                 }

@@ -54,7 +54,7 @@ class IRouterInterceptor implements Interceptor {
         }).doOnNext(new Consumer<Result>() {
             @Override
             public void accept(Result result) throws Exception {
-                IRouter.log("  onNext result: " + result);
+                IRouter.log("<---- onNext result: " + result);
             }
         }).doOnComplete(new Action() {
             @Override
@@ -73,7 +73,7 @@ class IRouterInterceptor implements Interceptor {
             }
         });
 
-        return Response.create(request, Activity.RESULT_OK, rxResult);
+        return Response.create(request, rxResult);
     }
 
 
@@ -93,7 +93,7 @@ class IRouterInterceptor implements Interceptor {
                     public void subscribe(ObservableEmitter<Result> emitter) throws Exception {
                         try {
                             Object obj = ExtensionLoader.getInstance().loadExtension(path);
-                            emitter.onNext(new Result(request.call, 0, Activity.RESULT_OK, obj));
+                            emitter.onNext(new Result(0, Activity.RESULT_OK, obj));
                             emitter.onComplete();
                         } catch (Throwable throwable) {
                             IRouter.log("<---- error: " + throwable);
@@ -131,7 +131,7 @@ class IRouterInterceptor implements Interceptor {
                                 setArguments.setAccessible(true);
                                 setArguments.invoke(obj, extras);
                             }
-                            emitter.onNext(new Result(request.call, 0, Activity.RESULT_OK, obj));
+                            emitter.onNext(new Result(0, Activity.RESULT_OK, obj));
                             emitter.onComplete();
                         } catch (Throwable throwable) {
                             IRouter.log("<---- error: " + throwable);
@@ -164,7 +164,7 @@ class IRouterInterceptor implements Interceptor {
                         }).map(new Function<AResult, Result>() {
                             @Override
                             public Result apply(AResult aResult) throws Exception {
-                                return new Result(request.call, aResult.requestCode(), aResult.requestCode(), aResult.data());
+                                return new Result(aResult.requestCode(), aResult.requestCode(), aResult.data());
                             }
                         });
 
@@ -195,7 +195,7 @@ class IRouterInterceptor implements Interceptor {
                     }).map(new Function<AResult, Result>() {
                         @Override
                         public Result apply(AResult aResult) throws Exception {
-                            return new Result(request.call, aResult.requestCode(), aResult.requestCode(), aResult.data());
+                            return new Result(aResult.requestCode(), aResult.requestCode(), aResult.data());
                         }
                     });
         }

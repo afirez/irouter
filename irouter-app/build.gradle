@@ -31,9 +31,9 @@ dependencies {
 
     implementation "com.afirez.spi:spi:$SPI_VERSION"
 //    implementation project(":rxactivityresult")
-//    implementation project(':irouter-api')
+    implementation project(':irouter-api')
     implementation "com.afirez.rxactivityresult:rxactivityresult:$IROUTER_VERSION"
-    implementation "com.afirez.irouter:irouter-api:$IROUTER_VERSION"
+//    implementation "com.afirez.irouter:irouter-api:$IROUTER_VERSION"
 
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

@@ -1,6 +1,7 @@
 package com.afirez.irouter.app;
 
 import android.app.Application;
+import com.afirez.irouter.IRouter;
 import com.afirez.rxactivityresult.RxActivityResult;
 
 /**
@@ -12,5 +13,6 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         RxActivityResult.init(this);
+        IRouter.setDebug(true);
     }
 }

@@ -1,40 +1,27 @@
 package com.afirez.irouter;
 
-import android.app.Activity;
-import com.afirez.irouter.exception.RouteCanceledException;
 import io.reactivex.Observable;
 
 public class Response {
 
     private Request request;
-    private int resultCode = Activity.RESULT_CANCELED;
-    private Object data;
+    private Observable<Result> rxResult;
 
-    public static Response canceled(Request request, int resultCode, String msg) {
-        Observable<Result> data = Observable.error(new RouteCanceledException(msg));
-        return new Response(request, resultCode, data);
+    public static Response create(Request request, Observable<Result> rxResult) {
+        return new Response(request, rxResult);
     }
 
-    public static Response create(Request request, int resultCode, Object data) {
-        return new Response(request, resultCode, data);
-    }
-
-    private Response(Request request, int resultCode, Object data) {
+    private Response(Request request, Observable<Result> rxResult) {
         this.request = request;
-        this.resultCode = resultCode;
-        this.data = data;
+        this.rxResult = rxResult;
     }
 
     public Request request() {
         return request;
     }
 
-    public int resultCode() {
-        return resultCode;
-    }
 
-
-    public Object data() {
-        return data;
+    public Observable<Result> rxResult() {
+        return rxResult;
     }
 }

@@ -35,12 +35,18 @@ public class IRouter implements Call.Factory {
         callAdapterFactories.add(new DefaultCallAdapterFactory());
     }
 
+    private static boolean debug = false;
+
+    public static void setDebug(boolean debug) {
+        IRouter.debug = debug;
+    }
+
     private List<CallAdapter.Factory> callAdapterFactories;
 
 
     private List<Interceptor> interceptors;
 
-    private Interceptor rocketInterceptor;
+    private Interceptor iRouterInterceptor;
 
 
     private final Map<Method, ServiceMethod<?, ?>> serviceMethodCache = new ConcurrentHashMap<>();
@@ -103,7 +109,7 @@ public class IRouter implements Call.Factory {
             }
 
             interceptors = new ArrayList<>();
-            Map<String, Interceptor> interceptorMap =  ExtensionLoader.getInstance().loadExtensions(Interceptor.class);
+            Map<String, Interceptor> interceptorMap = ExtensionLoader.getInstance().loadExtensions(Interceptor.class);
             if (interceptorMap != null) {
                 Set<Map.Entry<String, Interceptor>> entries = interceptorMap.entrySet();
                 for (Map.Entry<String, Interceptor> entry : entries) {
@@ -111,9 +117,9 @@ public class IRouter implements Call.Factory {
                 }
             }
 
-            rocketInterceptor = new IRouterInterceptor();
+            iRouterInterceptor = new IRouterInterceptor();
 
-            interceptors.add(rocketInterceptor);
+            interceptors.add(iRouterInterceptor);
         }
 
         return interceptors;
@@ -183,7 +189,9 @@ public class IRouter implements Call.Factory {
     }
 
     public static void log(String msg) {
+        if (debug) {
             Log.w("IRouter", msg);
+        }
     }
 
 }

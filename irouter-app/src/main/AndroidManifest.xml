@@ -4,7 +4,7 @@
           package="com.afirez.irouter.app">
 
     <application
-            android:name=".App"
+            android:name=".IRouterApp"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
@@ -13,8 +13,6 @@
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".NavFragmentActivity">
-        </activity>
-        <activity android:name=".NavActivity">
         </activity>
         <activity android:name=".MainActivity">
             <intent-filter>

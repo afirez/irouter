@@ -1,1 +1,16 @@
-include ':irouter-app', ':irouter-api', ':rxactivityresult'
+include ':irouter-app',
+        ':irouter-api',
+        ':rxactivityresult',
+
+        ':irouter_common_base_api',
+        ':irouter_common_biz_api',
+
+        ':irouter_activity',
+        ':irouter_activity_api',
+        ':irouter_fragment',
+        ':irouter_fragment_api',
+        ':irouter_provider',
+        ':irouter_provider_api',
+        ':irouter_applike',
+        ':irouter_applike_api',
+        ':irouter_interceptor'

@@ -1,6 +1,5 @@
 # IRouter 组件化最佳实践
-
-![router-app](https://raw.githubusercontent.com/afirez/images/master/vscode/README-irouter-app)
+![irouter-app](https://raw.githubusercontent.com/afirez/images/master/vscode/README_CN-irouter-app.png)
 
 你是否把所有初始化都写在一个 Applocation 中，没有组件化的时候， 项目中需要的初始化， 我们必须在一个 Applocation 中进行， 组件化之后， 基本也得在一个 Applocation 中进行。 能不能在新增组件时不改变 Application ？
 
@@ -58,14 +57,14 @@ implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
 ## 如何使用 irouter
 
-### 0、 IRouter 初始化
+### 0、IRouter 初始化
 
-![irouter-init](https://raw.githubusercontent.com/afirez/images/master/vscode/README-irouter-init)
+![irouter-init](https://raw.githubusercontent.com/afirez/images/master/vscode/README_CN-irouter-init.png)
 
 - AppDelegate: 组件化代理 Appcation 生命周期（ AppLike ）相关初始化
-- RxActivityResult : 将 startActivityForResult 响应式封装， IRouter 用 RxActivityResult 跳转 Activity。
+- RxActivityResult: startActivityForResult 响应式封装， IRouter 用 RxActivityResult 跳转 Activity。
 
-### 1、 IRouter 之 Activity 跳转
+### 1、IRouter 之 Activity 跳转
 
 #### 1、无参跳转 Activity
 
@@ -87,25 +86,25 @@ implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
 - 根据路径 path 动态跳转路由， 在部分场景中路由跳转会更加灵活。 例如在我们的路由是可以通过后台配置的时候。
 
-### 2、 IRouter 之 Fragment 加载
+### 2、IRouter 之 Fragment 加载
 
 ![iouter-fragment](https://raw.githubusercontent.com/afirez/images/master/vscode/README-iouter-fragment.png)
 
 - 带参数加载 Fragment 时， 参数支持大部分 intent 支持的参数类型。
 
-### 3、 IRouter 之 Provider 自定义接口加载
+### 3、IRouter 之 Provider 自定义接口加载
 
 ![irouter-provider](https://raw.githubusercontent.com/afirez/images/master/vscode/README-irouter-provider.png)
 
-### 4、 IRouter 之 Interceptor 拦截器
+### 4、IRouter 之 Interceptor 拦截器
 
 ![irouter-interceptor](https://raw.githubusercontent.com/afirez/images/master/vscode/README-irouter-interceptor.png)
 
 - 拦截器实现基于 RxJava， 通过发送 Observable.error() 中断请求。
 
-### 5、 IRouter 之 AppLike 组件化 Application 生命周期
+### 5、IRouter 之 AppLike 组件化 Application 生命周期
 
-![irouter-applike](https://raw.githubusercontent.com/afirez/images/master/vscode/README-irouter-applike.png)
+![irouter-applike](https://raw.githubusercontent.com/afirez/images/master/vscode/README_CN-irouter-applike.png)
 
  其实 [AppLike](https://github.com/afirez/spi) 不需要 irouter 也能实现 Application 生命周期组件化， AppLike 基于 [SPI](https://github.com/afirez/spi) 实现， 而且 IRouter 本身基于 SPI 实现。 如果遇到其他类似 AppLike 这样的接口加载场景， 我们还可以模仿 AppLike 实现， 这就需要看具体的场景。
 

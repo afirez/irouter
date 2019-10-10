@@ -117,7 +117,4 @@ implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
 - [RxActivityResult](https://github.com/VictorAlbertos/RxActivityResult)
 
-afirez-200.jpg
-
-![afirez](https://raw.githubusercontent.com/afirez/images/master/vscode/README_CN-afirez-200.png)
-<!-- ![afirez](https://user-gold-cdn.xitu.io/2019/6/1/16b13c2f917705f9?w=200&h=200&f=jpeg&s=20853) -->
+![afirez](https://raw.githubusercontent.com/afirez/images/master/vscode/README_CN-afirez-200.jpg)

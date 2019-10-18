@@ -42,7 +42,7 @@ Add **irouter** to module project if needed !
 
 ```
 
-implementation "com.afirez.irouter:irouter-api:1.0.0"
+implementation "com.afirez.irouter:irouter-api:1.0.1"
 
 implementation "com.afirez.rxactivityresult:rxactivityresult:1.0.0"
 implementation "io.reactivex.rxjava2:rxjava:2.2.12"

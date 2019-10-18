@@ -164,7 +164,7 @@ class IRouterInterceptor implements Interceptor {
                         }).map(new Function<AResult, Result>() {
                             @Override
                             public Result apply(AResult aResult) throws Exception {
-                                return new Result(aResult.requestCode(), aResult.requestCode(), aResult.data());
+                                return new Result(aResult.requestCode(), aResult.resultCode(), aResult.data());
                             }
                         });
 
@@ -195,7 +195,7 @@ class IRouterInterceptor implements Interceptor {
                     }).map(new Function<AResult, Result>() {
                         @Override
                         public Result apply(AResult aResult) throws Exception {
-                            return new Result(aResult.requestCode(), aResult.requestCode(), aResult.data());
+                            return new Result(aResult.requestCode(), aResult.resultCode(), aResult.data());
                         }
                     });
         }

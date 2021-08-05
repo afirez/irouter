@@ -42,7 +42,7 @@ allprojects {
 
     ...
   }
-
+}
 ```
 
 
@@ -66,6 +66,7 @@ allprojects {
 
     ...
   }
+}
 
 ```
 

@@ -48,7 +48,7 @@ allprojects {
 
     ...
   }
-
+}
 ```
 
 
@@ -71,7 +71,7 @@ allprojects {
 
     ...
   }
-
+}
 ```
 
 

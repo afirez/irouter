@@ -20,6 +20,9 @@
 buildscript {
   repositories {
     jcenter()
+
+    // add maven repository for spi-plugin at build.gradle file of root project
+    maven { url "https://raw.githubusercontent.com/afirez/spi/master/repo/" }
   }
 
   dependencies {
@@ -36,6 +39,20 @@ apply plugin: 'spi'
 添加 **[spi](https://github.com/afirez/spi)** 到需要的子模块
 
 ```
+allprojects {
+  repositories {
+    ...
+
+    // add maven repository for spi at build.gradle file of root project
+    maven { url "https://raw.githubusercontent.com/afirez/spi/master/repo/" }
+
+    ...
+  }
+
+```
+
+
+```
 
 implementation "com.afirez.spi:spi:1.0.1"
 
@@ -44,12 +61,26 @@ implementation "com.afirez.applike:applike:1.0.1"
 ```
 
 添加 **irouter** 到需要的子模块
+```
+allprojects {
+  repositories {
+    ...
+
+    // add maven repository for irouter at build.gradle file of root project
+    maven { url "https://raw.githubusercontent.com/afirez/irouter/master/repo/" }
+
+    ...
+  }
+
+```
+
 
 ```
 
 implementation "com.afirez.irouter:irouter-api:1.0.1"
 
 implementation "com.afirez.rxactivityresult:rxactivityresult:1.0.0"
+
 implementation "io.reactivex.rxjava2:rxjava:2.2.12"
 implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 

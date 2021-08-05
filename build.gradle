@@ -5,11 +5,11 @@ buildscript {
     repositories {
         google()
         jcenter()
-        maven {
-//            url uri('./repo')
-            url "https://dl.bintray.com/afirez/android"
-        }
-
+//        maven {
+////            url uri('./repo')
+//            url "https://dl.bintray.com/afirez/android"
+//        }
+        maven { url "https://raw.githubusercontent.com/afirez/spi/master/repo/" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.1'
@@ -28,10 +28,12 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven {
-//            url uri('../repo')
-            url "https://dl.bintray.com/afirez/android"
-        }
+//        maven {
+////            url uri('../repo')
+//            url "https://dl.bintray.com/afirez/android"
+//        }
+        maven { url "https://raw.githubusercontent.com/afirez/spi/master/repo/" }
+        maven { url "https://raw.githubusercontent.com/afirez/irouter/master/repo/" }
         maven { url "https://jitpack.io" }
     }
 }

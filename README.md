@@ -12,25 +12,49 @@ Add **spi-gradle-plugin** to your project !
 ```
 
 buildscript {
+  ext {
+    kotlin_version = '1.5.31'
+    booster_version = '4.6.0'
+  }
+  
   repositories {
-    jcenter()
-
+    mavenCentral()
+    google()
+    // jcenter()
+    
+    // didi booster
+    maven { url 'https://oss.sonatype.org/content/repositories/public/' }
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+    
     // add maven repository for spi-plugin at build.gradle file of root project
     maven { url "https://raw.githubusercontent.com/afirez/spi/master/repo/" }
   }
 
   dependencies {
-    // gradle plugin version <= 3.6.4
-    classpath 'com.afirez.spi:spi-gradle-plugin:1.0.1'
-    
-    // gradle plugin version >= 4.0.2
+    classpath 'com.afirez.spi:spi-gradle-plugin:3.0.0'
+    // ①
+    classpath "com.didiglobal.booster:booster-gradle-plugin:$booster_version"
+    // ② figure out the features you really need, then choose the right module for integration
+    // ② 弄清楚真正需要的特性，然后从下面的模块列表中选择正确的模块进行集成
+    // classpath "com.didiglobal.booster:booster-task-all:$booster_version"
+    // classpath "com.didiglobal.booster:booster-transform-all:$booster_version"
+        
+    // gradle plugin version <= 4.1.2
     // classpath 'com.afirez.spi:spi-gradle-plugin:2.0.0'
+    
+    // gradle plugin version <= 3.6.4
+    // classpath 'com.afirez.spi:spi-gradle-plugin:1.0.1'
   }
 }
 
 // in module build.gradle
 apply plugin: 'com.android.application'
-apply plugin: 'spi' 
+
+// didi booster
+apply plugin: 'com.didiglobal.booster' // ③
+
+// gradle plugin version <= 4.1.2
+// apply plugin: 'spi' 
 // or apply plugin: 'com.afirez.spi'
 
 ```
@@ -41,8 +65,16 @@ allprojects {
   repositories {
     ...
 
+    mavenCentral()
+    google()
+    // jcenter()
+    
+    // didi booster
+    maven { url 'https://oss.sonatype.org/content/repositories/public/' }
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+
     // add maven repository for spi at build.gradle file of root project
-    maven { url "https://raw.githubusercontent.com/afirez/spi/master/repo/" }
+    maven { url "https://raw.githubusercontent.com/afirez/apps_android_repo/master" }
 
     ...
   }
@@ -64,9 +96,17 @@ Add **irouter** to module project if needed !
 allprojects {
   repositories {
     ...
+    
+    mavenCentral()
+    google()
+    // jcenter()
+    
+    // didi booster
+    maven { url 'https://oss.sonatype.org/content/repositories/public/' }
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
 
-    // add maven repository for irouter at build.gradle file of root project
-    maven { url "https://raw.githubusercontent.com/afirez/irouter/master/repo/" }
+    // add maven repository for spi at build.gradle file of root project
+    maven { url "https://raw.githubusercontent.com/afirez/apps_android_repo/master" }
 
     ...
   }
